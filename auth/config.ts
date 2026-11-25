@@ -16,12 +16,17 @@ const signInSchema = z.object({
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
 
+  trustHost: true,
+
   session: {
     strategy: "jwt",
   },
 
   providers: [
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    }),
 
     Credentials({
       name: "Credentials",
@@ -38,7 +43,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
 
       async authorize(credentials) {
-        const validatedFields = signInSchema.safeParse(credentials);
+        const validatedFields =
+          signInSchema.safeParse(credentials);
 
         if (!validatedFields.success) {
           return null;
