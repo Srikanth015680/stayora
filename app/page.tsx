@@ -278,19 +278,19 @@ async function HomePageContent({
   const defaultGridCards = limitedCards;
 
   return (
-    <main className="mx-auto min-h-screen max-w-7xl px-4 pb-14 pt-8 md:px-8 md:pb-12 md:pt-6">
+    <main className="mx-auto min-h-screen w-full max-w-7xl overflow-x-hidden px-3 pb-10 pt-5 sm:px-4 md:px-8 md:pb-12 md:pt-6">
       {/* Hero Section */}
-      <section className="rounded-3xl border border-ink-200 bg-gradient-to-br from-brand-50 via-surface to-ink-50 p-6 md:p-10">
+      <section className="rounded-2xl border border-ink-200 bg-gradient-to-br from-brand-50 via-surface to-ink-50 p-4 sm:rounded-3xl sm:p-6 md:p-10">
         <div className="mx-auto max-w-[50.5rem] text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand-600">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand-600 sm:text-sm sm:tracking-[0.2em]">
             Thoughtfully selected homes across the United States
           </p>
 
-          <h1 className="font-display mt-5 text-3xl font-bold tracking-tight text-ink-900 md:mt-3 md:text-5xl">
+          <h1 className="font-display mt-4 text-3xl font-bold tracking-tight text-ink-900 sm:mt-5 sm:text-4xl md:mt-3 md:text-5xl">
             Find the right place to stay
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-ink-600 md:mt-3 md:text-base">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-ink-600 sm:text-base md:mt-3">
             Explore professionally presented stays in leading US destinations.
             Filter by location, dates, and guest count to shortlist the best fit
             for your trip.
@@ -298,7 +298,7 @@ async function HomePageContent({
         </div>
 
         {/* Search Bar */}
-        <div className="mx-auto mt-7 max-w-[57.5rem] md:mt-8">
+        <div className="mx-auto mt-6 w-full max-w-[57.5rem] md:mt-8">
           <HomeSearchBar
             initialLocation={params.location}
             initialGuests={params.guests}
@@ -311,8 +311,8 @@ async function HomePageContent({
         </div>
 
         {/* Categories */}
-        <div className="mx-auto mt-6 flex max-w-[57.5rem] items-start justify-between gap-3">
-          <div className="hide-scrollbar flex gap-2 overflow-x-auto whitespace-nowrap pb-1">
+        <div className="mx-auto mt-6 flex w-full max-w-[57.5rem] flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="hide-scrollbar flex w-full gap-2 overflow-x-auto whitespace-nowrap pb-2 sm:w-auto sm:flex-1">
             {categoryItems.map((item) => {
               const Icon = item.icon;
               const isActive = params.category === item.label;
@@ -365,7 +365,7 @@ async function HomePageContent({
           {hasAnyFilter && (
             <Link
               href="/"
-              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-ink-300 px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
+              className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-ink-300 px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
             >
               Clear filters
             </Link>
@@ -373,7 +373,7 @@ async function HomePageContent({
         </div>
 
         {/* Search Summary */}
-        <p className="mx-auto mt-3 max-w-[57.5rem] text-sm text-ink-600">
+        <p className="mx-auto mt-3 max-w-[57.5rem] break-words text-xs leading-relaxed text-ink-600 sm:text-sm">
           Showing stays for{" "}
           <span className="font-medium text-ink-900">{guestsLabel}</span>
           {" · "}
@@ -385,8 +385,8 @@ async function HomePageContent({
 
       {/* Property Listings */}
       {unifiedCards.length === 0 ? (
-        <section className="mt-10 md:mt-8">
-          <p className="text-ink-600">
+        <section className="mt-8 sm:mt-10 md:mt-8">
+          <p className="text-sm leading-relaxed text-ink-600 sm:text-base">
             No stays match your current filters. Try adjusting destination,
             dates, or guest count.
           </p>
@@ -394,46 +394,46 @@ async function HomePageContent({
       ) : (
         <>
           {hasLocationSearch ? (
-            <section className="mt-10 space-y-10 md:mt-8 md:space-y-9">
+            <section className="mt-8 space-y-9 sm:mt-10 sm:space-y-10 md:mt-8 md:space-y-9">
               {groupedCards.map((group) => (
                 <div key={group.city}>
-                  <div className="mb-4 flex items-center gap-2">
-                    <h2 className="font-display text-2xl font-semibold tracking-tight text-ink-900">
+                  <div className="mb-4 flex min-w-0 items-center gap-2">
+                    <h2 className="font-display min-w-0 text-xl font-semibold tracking-tight text-ink-900 sm:text-2xl">
                       Top stays in {group.city}
                     </h2>
-                    <ChevronRight className="h-5 w-5 text-ink-700" />
+                    <ChevronRight className="h-5 w-5 shrink-0 text-ink-700" />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 gap-x-4 gap-y-6 min-[420px]:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
                     {group.items.slice(0, 16).map((item, index) => (
                       <Link
                         key={item.id}
                         href={buildListingHref(item.id)}
-                        className="block space-y-2"
+                        className="group block min-w-0 space-y-2"
                       >
-                        <div className="overflow-hidden rounded-2xl">
+                        <div className="overflow-hidden rounded-xl sm:rounded-2xl">
                           <SafeImage
                             src={item.image}
                             alt={item.title}
                             width={420}
                             height={280}
-                            className="h-48 w-full object-cover"
+                            className="aspect-[4/3] h-auto w-full object-cover transition duration-300 group-hover:scale-105"
                             priority={index < 2}
                           />
                         </div>
 
-                        <div className="space-y-0.5 px-0.5">
-                          <p className="inline-flex rounded-full bg-ink-100 px-2 py-0.5 text-[11px] font-medium text-ink-700">
-                            {item.city}
+                        <div className="min-w-0 space-y-0.5 px-0.5">
+                          <p className="inline-flex max-w-full rounded-full bg-ink-100 px-2 py-0.5 text-[11px] font-medium text-ink-700">
+                            <span className="truncate">{item.city}</span>
                           </p>
 
-                          <p className="line-clamp-1 text-sm font-medium text-ink-900">
+                          <p className="line-clamp-1 break-words text-sm font-medium text-ink-900">
                             {item.title}
                           </p>
 
-                          <p className="line-clamp-1 text-xs text-ink-500">
-                            ${item.price} for 2 nights
-                            <span className="ml-1 inline-flex items-center gap-0.5">
+                          <p className="flex flex-wrap items-center gap-x-1 text-xs text-ink-500">
+                            <span>${item.price} for 2 nights</span>
+                            <span className="inline-flex items-center gap-0.5">
                               <Star className="h-3 w-3 fill-current text-ink-700" />
                               {item.rating}
                             </span>
@@ -446,44 +446,44 @@ async function HomePageContent({
               ))}
             </section>
           ) : (
-            <section className="mt-10 md:mt-8">
-              <div className="mb-4 flex items-center gap-2">
-                <h2 className="font-display text-2xl font-semibold tracking-tight text-ink-900">
+            <section className="mt-8 sm:mt-10 md:mt-8">
+              <div className="mb-4 flex min-w-0 items-center gap-2">
+                <h2 className="font-display min-w-0 text-xl font-semibold tracking-tight text-ink-900 sm:text-2xl">
                   Top picks across the United States
                 </h2>
-                <ChevronRight className="h-5 w-5 text-ink-700" />
+                <ChevronRight className="h-5 w-5 shrink-0 text-ink-700" />
               </div>
 
-              <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-x-4 gap-y-6 min-[420px]:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
                 {defaultGridCards.map((item, index) => (
                   <Link
                     key={item.id}
                     href={buildListingHref(item.id)}
-                    className="block space-y-2"
+                    className="group block min-w-0 space-y-2"
                   >
-                    <div className="overflow-hidden rounded-2xl">
+                    <div className="overflow-hidden rounded-xl sm:rounded-2xl">
                       <SafeImage
                         src={item.image}
                         alt={item.title}
                         width={420}
                         height={280}
-                        className="h-48 w-full object-cover"
+                        className="aspect-[4/3] h-auto w-full object-cover transition duration-300 group-hover:scale-105"
                         priority={index < 4}
                       />
                     </div>
 
-                    <div className="space-y-0.5 px-0.5">
-                      <p className="inline-flex rounded-full bg-ink-100 px-2 py-0.5 text-[11px] font-medium text-ink-700">
-                        {item.city}
+                    <div className="min-w-0 space-y-0.5 px-0.5">
+                      <p className="inline-flex max-w-full rounded-full bg-ink-100 px-2 py-0.5 text-[11px] font-medium text-ink-700">
+                        <span className="truncate">{item.city}</span>
                       </p>
 
-                      <p className="line-clamp-1 text-sm font-medium text-ink-900">
+                      <p className="line-clamp-1 break-words text-sm font-medium text-ink-900">
                         {item.title}
                       </p>
 
-                      <p className="line-clamp-1 text-xs text-ink-500">
-                        ${item.price} for 2 nights
-                        <span className="ml-1 inline-flex items-center gap-0.5">
+                      <p className="flex flex-wrap items-center gap-x-1 text-xs text-ink-500">
+                        <span>${item.price} for 2 nights</span>
+                        <span className="inline-flex items-center gap-0.5">
                           <Star className="h-3 w-3 fill-current text-ink-700" />
                           {item.rating}
                         </span>
@@ -498,21 +498,21 @@ async function HomePageContent({
       )}
 
       {/* Footer */}
-      <footer className="mt-16 rounded-3xl border border-ink-200 bg-surface p-6 shadow-sm md:mt-14 md:p-7">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div className="md:col-span-2">
+      <footer className="mt-12 rounded-2xl border border-ink-200 bg-surface p-4 shadow-sm sm:mt-16 sm:rounded-3xl sm:p-6 md:mt-14 md:p-7">
+        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
+          <div className="min-w-0 sm:col-span-2">
             <h3 className="font-display text-2xl font-semibold text-ink-900">
               Stayora
             </h3>
 
-            <p className="mt-3 max-w-xl text-sm text-ink-600">
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-600">
               Discover carefully curated stays with a booking flow designed
               for clarity and confidence. Compare homes quickly and reserve
               with ease.
             </p>
 
-            <p className="mt-5 inline-flex items-center gap-1 text-xs text-ink-500">
-              <Users className="h-3.5 w-3.5" />
+            <p className="mt-5 inline-flex items-start gap-1 text-xs leading-relaxed text-ink-500">
+              <Users className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               Powered by curated sample listing data focused on US destinations
             </p>
           </div>
@@ -545,7 +545,6 @@ async function HomePageContent({
     </main>
   );
 }
-
 
 export default function HomePage({ searchParams }: HomePageProps) {
   return (
